@@ -12,4 +12,4 @@ Write-Host "Creating Media Paths"
 New-Item -ItemType Directory c:\media-stack\data\downloads\torrents -ErrorAction SilentlyContinue
 New-Item -ItemType Directory c:\media-stack\data\Movies -ErrorAction SilentlyContinue
 
-docker-compose up --detach 
+docker-compose up docker-compose-win.yml --detach 
