@@ -10,7 +10,7 @@ mkdir /media-stack/conf/radarr
 mkdir /media-stack/conf/jackett
 
 echo "Creating Media Paths"
-mkdir /media-stack/data/downloads/torrents
+mkdir /media-stack/data/downloads/torrents -p
 mkdir /media-stack/data/Movies
 
 docker-compose up docker-compose-lin.yml --detach 
