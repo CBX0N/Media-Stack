@@ -5,8 +5,8 @@ services:
     environment:
       - TZ=Europe/London
     volumes:
-      - /media-stack\data:/data
-      - /media-stack\conf\radarr:/config
+      - /media-stack/data:/data
+      - /media-stack/conf/radarr:/config
     ports:
       - 7878:7878
   jackett:
@@ -15,8 +15,8 @@ services:
     environment:
       - TZ=Europe/London
     volumes:
-      - /media-stack\conf\jackett:/config
-      - /media-stack\data\downloads\torrents:/downloads
+      - /media-stack/conf/jackett:/config
+      - /media-stack/data/downloads/torrents:/downloads
     ports:
       - 9117:9117
   flaresolver:
