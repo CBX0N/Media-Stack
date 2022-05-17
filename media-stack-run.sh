@@ -1,11 +1,11 @@
 #!/bin/sh
 
 echo "Creating Config Paths"
-mkdir /media-stack/conf/radarr -p
-mkdir /media-stack/conf/jackett -p
+mkdir -p /media-stack/conf/radarr 
+mkdir -p /media-stack/conf/jackett 
 
 echo "Creating Media Paths"
-mkdir /media-stack/data/downloads/torrents -p
-mkdir /media-stack/data/Movies -p
+mkdir -p /media-stack/data/downloads/torrents 
+mkdir -p /media-stack/data/Movies 
 
 docker-compose -f docker-compose-lin.yml up --detach 
