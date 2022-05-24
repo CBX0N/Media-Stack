@@ -4,6 +4,7 @@ echo "Creating Config Paths"
 mkdir -p /media-stack/conf/radarr
 mkdir -p /media-stack/conf/sonarr
 mkdir -p /media-stack/conf/jackett 
+mkdir -p /media-stack/conf/uTorrent 
 
 echo "Creating Media Paths"
 mkdir -p /media-stack/data/downloads/torrents 
