@@ -8,6 +8,10 @@ RUN apt update -y
 RUN apt install libssl-dev wget iputils-ping -y
 
 RUN wget http://download.ap.bittorrent.com/track/beta/endpoint/utserver/os/linux-x64-ubuntu-13-04 -O utserver.tar.gz
+RUN wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5.9_amd64.deb
+RUN apt purge libssl1.1 -y
+RUN dpkg -i *.deb
+RUN apt list | grep libssl
 RUN tar -zxvf utserver.tar.gz -C /opt/
 RUN ln -s /opt/utorrent-server-*/utserver /usr/bin/utserver
 
