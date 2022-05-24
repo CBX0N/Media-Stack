@@ -6,6 +6,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /media-stack/data:/data
+      - /mnt/movies:/movies
       - /media-stack/conf/radarr:/config
     ports:
       - 7878:7878
@@ -16,6 +17,7 @@ services:
       - TZ=Europe/London
     volumes:
       - /media-stack/data:/data
+      - /mnt/tv:/tv
       - /media-stack/conf/sonarr:/config
     ports:
       - 8989:8989  
