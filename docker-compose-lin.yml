@@ -1,7 +1,7 @@
 services: 
   uTorrent:
     container_name: uTorrent
-    build: uTorrent/.
+    build: utorrent/.
     image: cbxon/utorrent-server:latest
     ports:
       - "8080:8080"
