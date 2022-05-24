@@ -11,6 +11,4 @@ RUN wget http://download.ap.bittorrent.com/track/beta/endpoint/utserver/os/linux
 RUN tar -zxvf utserver.tar.gz -C /opt/
 RUN ln -s /opt/utorrent-server-*/utserver /usr/bin/utserver
 
-RUN utserver -settingspath /opt/utorrent-server-*/ &
-
-CMD ping localhost
+CMD utserver -settingspath /opt/utorrent-server-*/ && ping localhost
