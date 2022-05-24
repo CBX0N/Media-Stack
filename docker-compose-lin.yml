@@ -1,4 +1,14 @@
 services: 
+  uTorrent:
+    container_name: uTorrent
+    build: uTorrent/.
+    image: cbxon/utorrent-server:latest
+    ports:
+      - "8080:8080"
+      - "6881:6881"
+    volumes:
+      - /media-stack/conf/uTorrent:/config
+      - /media-stack/data/downloads/torrents:/downloads
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
