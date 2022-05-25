@@ -1,0 +1,13 @@
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=0
+      - PGID=0
+      - VERSION=docker
+    volumes:
+      - /media-stack/conf/plex:/config
+      - /mnt/tv:/tv
+      - /mnt/movies:/movies

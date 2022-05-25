@@ -1,0 +1,14 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - TZ=Europe/London
+      - PUID=0
+      - PGID=0
+    volumes:
+      - /media-stack/data:/data
+      - /mnt/movies:/data/Movies
+      - /media-stack/conf/radarr:/config
+    ports:
+      - 7878:7878
