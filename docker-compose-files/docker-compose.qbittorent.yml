@@ -10,7 +10,7 @@ services:
     volumes:
       - /media-stack/conf/qbittorent:/config
       - /media-stack/data/downloads/torrents:/downloads
-    ports:
-      - 8080:8080
-      - 6881:6881
-      - 6881:6881/udp
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.cbxon.co.uk`)"
+      - "traefik.http.routers.qbittorrent.entrypoints=web"

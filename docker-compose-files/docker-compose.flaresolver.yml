@@ -4,5 +4,7 @@ services:
     container_name: flaresolverr
     environment:
       - LOG_LEVEL=info
-    ports:
-      - 8191:8191
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.flaresolver.rule=Host(`flaresolver.cbxon.co.uk`)"
+      - "traefik.http.routers.flaresolver.entrypoints=web"

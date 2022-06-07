@@ -10,4 +10,4 @@ echo "Creating Media Paths"
 mkdir -p /media-stack/data/downloads/torrents 
 mkdir -p /media-stack/data/Movies 
 
-docker-compose -f docker-compose-files/docker-compose.* up --detach 
+docker-compose . up --detach 

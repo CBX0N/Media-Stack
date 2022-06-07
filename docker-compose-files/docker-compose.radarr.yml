@@ -10,5 +10,7 @@ services:
       - /media-stack/data:/data
       - /mnt/movies:/data/Movies
       - /media-stack/conf/radarr:/config
-    ports:
-      - 7878:7878
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.radarr.rule=Host(`radarr.cbxon.co.uk`)"
+      - "traefik.http.routers.radarr.entrypoints=web"

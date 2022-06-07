@@ -7,5 +7,7 @@ services:
     volumes:
       - /media-stack/conf/jackett:/config
       - /media-stack/data/downloads/torrents:/downloads
-    ports:
-      - 9117:9117
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.jackett.rule=Host(`jackett.cbxon.co.uk`)"
+      - "traefik.http.routers.jackett.entrypoints=web"
