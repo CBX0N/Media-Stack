@@ -8,3 +8,5 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.flaresolver.rule=Host(`flaresolver.cbxon.co.uk`)"
       - "traefik.http.routers.flaresolver.entrypoints=web"
+    networks:
+      - backend  

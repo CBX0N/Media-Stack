@@ -14,3 +14,5 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.cbxon.co.uk`)"
       - "traefik.http.routers.qbittorrent.entrypoints=web"
+    networks:
+      - backend  

@@ -11,3 +11,5 @@ services:
       - /media-stack/conf/plex:/config
       - /mnt/tv:/tv
       - /mnt/movies:/movies
+    networks:
+      - backend  

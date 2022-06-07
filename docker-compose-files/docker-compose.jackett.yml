@@ -11,3 +11,5 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.rule=Host(`jackett.cbxon.co.uk`)"
       - "traefik.http.routers.jackett.entrypoints=web"
+    networks:
+      - backend  

@@ -14,3 +14,5 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.cbxon.co.uk`)"
       - "traefik.http.routers.sonarr.entrypoints=web"
+    networks:
+      - backend

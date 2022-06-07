@@ -7,7 +7,9 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.flaresolver.rule=Host(`flaresolver.cbxon.co.uk`)"
-      - "traefik.http.routers.flaresolver.entrypoints=web"  
+      - "traefik.http.routers.flaresolver.entrypoints=web"
+    networks:
+      - backend    
   jackett:
     image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
@@ -20,18 +22,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.rule=Host(`jackett.cbxon.co.uk`)"
       - "traefik.http.routers.jackett.entrypoints=web"
-  plex:
-    image: lscr.io/linuxserver/plex:latest
-    container_name: plex
-    network_mode: host
-    environment:
-      - PUID=0
-      - PGID=0
-      - VERSION=docker
-    volumes:
-      - /media-stack/conf/plex:/config
-      - /mnt/tv:/tv
-      - /mnt/movies:/movies
+    networks:
+      - backend  
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
@@ -47,6 +39,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.cbxon.co.uk`)"
       - "traefik.http.routers.qbittorrent.entrypoints=web"
+    networks:
+      - backend  
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -62,6 +56,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.rule=Host(`radarr.cbxon.co.uk`)"
       - "traefik.http.routers.radarr.entrypoints=web"
+    networks:
+      - backend
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -77,3 +73,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.rule=Host(`sonarr.cbxon.co.uk`)"
       - "traefik.http.routers.sonarr.entrypoints=web"
+    networks:
+      - backend
+networks:
+  backend:
+    external: true
