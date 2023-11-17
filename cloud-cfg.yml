@@ -1,0 +1,9 @@
+#cloud-config
+users:
+  - name: ansible
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDhKgt2QZ8Ho0tPTsFz01+aPP2aR/eL3fVrJnEh7wzpeeK9BTBERlr6yHBDGVSmpfUMTPhS1/p77/BV2HRypPhkwI+4PUXqFUIjOKR81A/KXasUbWxbdG28ZGCmHxTpmPhY7DrbYRH1oYGiaoppwaacRJ84e0VULL/Y1/3V25DpfJ0K7zRhMYA68oxKRPYy03Lo4uU+83WshFo1zRUH0VIEo7E/7QXPMaH66P7N/cqWFxVdAr4h1kNnmY6sRvN9YYlyrZNuEMGsDMByePyMb21KMv2T+c9E4efFB6fKdhmuicZkF/z6Rk9ZjDtMrVCkBLOZssN5xFJzPagiimlXp9bV1omIn4toMj4A/F0fl+6FjFZiX1hsA09CxgCetGndfy3+IrXpR0UkghSyVOekr2H71SGRpEl6tdJprllYX2BtgekjbCb35Im+3LEUuWpWUz2FGf4LcrBCFvr2GCkJQ6AWUgFFuGVS8C4rfypiLvABqDOrpBAFiZBWG7z6SpCwD5E= charlieb@charlieb01-mac
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    shell: /bin/bash
+    passwd: $6$dilsCzIX44TUYHn2$AkgbJQSExFl1/hSHHqnFZSk18RAWFZCAwDzfCmIyJxf/rDKwI3TefLUj075fJ7yB/GHP8YlV2OhkGW/L63F9v/

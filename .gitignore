@@ -1,0 +1,14 @@
+#Terraform
+.Terraform
+.Terraform.lock.hcl
+Terraform.tfstate
+Terraform.tfstate.backup
+secrets.tfvars
+
+# Stack Config
+docker-compose-wireguard.yml
+docker.env
+acme.json
+
+# Ansible Playbooks
+secrets.yml

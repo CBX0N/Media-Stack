@@ -1,0 +1,45 @@
+---
+- hosts: all
+  become: true
+  vars_files: secrets.yml
+  tasks:
+    - name: Create Docker User Group
+      ansible.builtin.group:
+        name: docker
+        
+    - name: Configure ansible user
+      ansible.builtin.user:
+        name: ansible
+        password: '{{ password }}'
+        group: docker
+        append: true
+
+    - name: Install Required System Packages
+      ansible.builtin.apt:
+        pkg:
+          - ca-certificates
+          - curl
+          - gnupg
+        state: latest
+        update_cache: true
+
+    - name: Add Docker GPG apt key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+
+    - name: Install Docker Packages
+      ansible.builtin.apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+        update_cache: true
