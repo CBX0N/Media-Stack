@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Install Required System Packages
+      ansible.builtin.apt:
+        pkg:
+          - rclone
+        state: latest
+        update_cache: true
+
+    - name: Configure RClone Remote
+      ansible.builtin.copy:
+        dest: /home/ansible/.config/rclone/rclone.conf
+        src: ../rclone/rclone.conf
+        mode: "0644"
+        force: true
+
+    - name: Copy backup shell script
+      ansible.builtin.copy:
+        dest: /usr/local/bin/backups.sh
+        src: ./backups.sh
+        mode: '0755'
+        force: true
+
+    - name: Configure Backup Cron Job
+      ansible.builtin.cron:
+        user: ansible
+        name: "Backup Docker"
+        minute: "0"
+        hour: "23"
+        job: "backups.sh"

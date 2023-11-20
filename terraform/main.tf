@@ -30,6 +30,53 @@ resource "linode_instance" "stack-host" {
   }
 }
 
+resource "linode_firewall" "fw" {
+  label = "cbx-fw-fr-par"
+  inbound_policy = "DROP"
+  outbound_policy = "ACCEPT"
+
+  inbound {
+    label = "Allow-PLEX-TCP"
+    action = "ACCEPT"
+    ipv4 = [ "0.0.0.0/0" ]
+    ports = "32400"
+    protocol = "TCP"
+  }
+
+  inbound {
+    label = "Allow-HTTP-TCP"
+    action = "ACCEPT"
+    ipv4 = [ "77.98.5.189/32" ]
+    ports = "80"
+    protocol = "TCP"
+  }
+  inbound {
+    label = "Allow-HTTPS-TCP"
+    action = "ACCEPT"
+    ipv4 = [ "0.0.0.0/0" ]
+    ports = "443"
+    protocol = "TCP"
+  }
+
+  inbound {
+    label = "Allow-SSH-PIP"
+    action = "ACCEPT"
+    ipv4 = [ "77.98.5.189/32" ]
+    ports = "22"
+    protocol = "TCP"
+  }
+
+  inbound {
+    label = "Allow-FF-TCP"
+    action = "ACCEPT"
+    ipv4 = [ "77.98.5.189/32" ]
+    ports = "3001"
+    protocol = "TCP"
+  }
+
+  linodes = [ linode_instance.stack-host.id ]
+}
+
 resource "cloudflare_record" "root-a-record" {
   zone_id = var.cloudflare_zone_id
   name    = "@"

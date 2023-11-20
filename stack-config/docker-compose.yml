@@ -7,7 +7,8 @@ services:
     env_file: ./docker.env
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik.yml:/traefik.yml:ro
+      - ./traefik/traefik.yml:/traefik.yml:ro
+      - ./traefik/acme.json:/acme.json
     ports:
       - "80:80"
       - "443:443"
@@ -71,6 +72,8 @@ services:
       - "traefik.http.routers.jackett.rule=Host(`jackett.cbxon.co.uk`)"
       - "traefik.http.services.jackett.loadbalancer.server.port=9117"
       - "traefik.http.routers.jackett.entrypoints=websecure"
+    ports:
+      - 9117
     restart: unless-stopped
 
   flaresolverr:
@@ -101,4 +104,11 @@ services:
       - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.cbxon.co.uk`)"
       - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
       - "traefik.http.routers.qbittorrent.entrypoints=websecure"
+    restart: unless-stopped
+
+  firefox:
+    image: lscr.io/linuxserver/firefox:latest
+    container_name: firefox
+    env_file: ./docker.env
+    network_mode: bridge
     restart: unless-stopped

@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: Create Plex User Group
+      ansible.builtin.group:
+        name: docker
+
+    - name: Add Plex GPG apt key
+      ansible.builtin.apt_key:
+        url: https://downloads.plex.tv/plex-keys/PlexSign.key
+        state: present
+
+    - name: Add Plex Repository
+      apt_repository:
+        repo: deb https://downloads.plex.tv/repo/deb public main
+        state: present
+        
+    - name: Install Plex Packages
+      ansible.builtin.apt:
+        pkg:
+          - plexmediaserver
+        state: present
+        update_cache: true

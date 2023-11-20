@@ -1,37 +1,58 @@
 ---
 - hosts: all
   become: true
+  vars:
+    - stack_location: /opt/stack-config
   tasks:
-    - name: Create directory for Stack
-      ansible.builtin.file:
-        path: /opt/stack-config
-        state: directory
-        mode: '0755'
-
     - name: Create directory for tv
       ansible.builtin.file:
         path: /media/tv
         state: directory
-        mode: '0755'
+        mode: '0775'
+        owner: ansible
+        group: docker
 
     - name: Create directory for movies
       ansible.builtin.file:
         path: /media/movies
         state: directory
-        mode: '0755'
+        mode: '0775'
+        owner: ansible
+        group: docker
 
     - name: Create directory for downloads
       ansible.builtin.file:
         path: /media/downloads
         state: directory
-        mode: '0755'
+        mode: '0775'
+        owner: ansible
+        group: docker
+  
+    - name: Create directory for music
+      ansible.builtin.file:
+        path: /media/music
+        state: directory
+        mode: '0775'
+        owner: ansible
+        group: docker
+
+    - name: Create directory for Stack
+      ansible.builtin.file:
+        path: '{{ stack_location }}'
+        state: directory
+        mode: '0775'
+        owner: ansible
+        group: docker
 
     - name: Copy Stack Config files
       ansible.builtin.copy:
         src: ../stack-config/
-        dest: /opt/stack-config
-        mode: '0666'
+        dest: '{{ stack_location }}'
+        mode: '0775'
+        owner: ansible
+        group: docker
+
     - name: Run Docker Compose
       ansible.builtin.shell:
         cmd: docker compose down && docker compose up -d
-        chdir: /opt/stack-config
+        chdir: '{{ stack_location }}'

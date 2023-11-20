@@ -12,3 +12,9 @@ acme.json
 
 # Ansible Playbooks
 secrets.yml
+
+#Rclone
+Rclone.Conf
+
+#Code Editor
+.vscode
