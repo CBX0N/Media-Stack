@@ -1,5 +1,5 @@
 linode_fw_config = {
-  label           = "cbx-fw-fr-par"
+  label           = "cbx-fw-fr"
   inbound_policy  = "DROP"
   outbound_policy = "ACCEPT"
   inbound_rules = {
@@ -28,7 +28,7 @@ linode_fw_config = {
 }
 
 linode_instance_config = {
-  label      = "cbx-fe-fr-par"
+  label      = "cbx-fe-fr"
   type       = "g6-standard-2"
   region     = "fr-par"
   image      = "linode/ubuntu22.04"
