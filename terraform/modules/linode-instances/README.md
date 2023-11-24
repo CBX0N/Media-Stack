@@ -10,10 +10,6 @@
 |------|---------|
 | <a name="provider_linode"></a> [linode](#provider\_linode) | 2.9.7 |
 
-## Modules
-
-No modules.
-
 ## Resources
 
 | Name | Type |
