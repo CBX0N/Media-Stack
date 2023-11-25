@@ -29,7 +29,7 @@ jobs:
     - name: Terraform Format
       run: terraform fmt -check
     - name: Terraform Plan
-      run: terraform plan -input=false -var='cloudflare_api_token="${{ secrets.CLOUDFLARE_API_TOKEN }}"' -var='cloudflare_zone_id="${{ secrets.CLOUDFLARE_ZONE_ID }}"' -var='linode_api_token="${{ secrets.LINODE_API_TOKEN }}"' -var='dns_hostname="${{ secrets.DNS_HOSTNAME }}"' -var='onprem_ip=["${{ secrets.ONPREM_IP }}"]'
+      run: terraform plan -input=false -var='linode_api_token="${{ secrets.LINODE_API_TOKEN }}"' -var='cloudflare_api_token="${{ secrets.CLOUDFLARE_API_TOKEN }}"' -var='cloudflare_zone_id="${{ secrets.CLOUDFLARE_ZONE_ID }}"' -var='dns_hostname="${{ secrets.DNS_HOSTNAME }}"' -var='onprem_ip=["${{ secrets.ONPREM_IP }}"]'
     - name: Terraform Apply
       if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=false
