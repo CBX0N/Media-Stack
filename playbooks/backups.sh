@@ -1,5 +1,4 @@
 #!/bin/bash
-
 dockerServices=("traefik" "sonarr" "radarr" "lidarr" "jackett" "qBittorrent")
 dockerStackPath="/opt/stack-config"
 rcloneDrive="docker-backups"

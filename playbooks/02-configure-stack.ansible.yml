@@ -4,45 +4,19 @@
   vars:
     - stack_location: /opt/stack-config
   tasks:
-    - name: Create directory for tv
+    - name: Create directories
       ansible.builtin.file:
-        path: /media/tv
+        path: "{{ item }}"
         state: directory
         mode: '0775'
         owner: ansible
         group: docker
-
-    - name: Create directory for movies
-      ansible.builtin.file:
-        path: /media/movies
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
-
-    - name: Create directory for downloads
-      ansible.builtin.file:
-        path: /media/downloads
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
-  
-    - name: Create directory for music
-      ansible.builtin.file:
-        path: /media/music
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
-
-    - name: Create directory for Stack
-      ansible.builtin.file:
-        path: '{{ stack_location }}'
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
+      loop:
+        - /media/tv
+        - /media/movies
+        - /media/downloads
+        - /media/music
+        - '{{ stack_location }}'
 
     - name: Copy Stack Config files
       ansible.builtin.copy:
