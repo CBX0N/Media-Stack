@@ -20,17 +20,17 @@ locals {
       type  = "CNAME"
       value = var.dns_hostname
     },
-        "Paragon-CNAME" = {
+    "Paragon-CNAME" = {
       name  = "Paragon"
       type  = "CNAME"
       value = var.dns_hostname
     },
-        "Titan-CNAME" = {
+    "Titan-CNAME" = {
       name  = "Titan"
       type  = "CNAME"
       value = var.dns_hostname
     },
-        "Rogue-CNAME" = {
+    "Rogue-CNAME" = {
       name  = "Rogue"
       type  = "CNAME"
       value = var.dns_hostname
