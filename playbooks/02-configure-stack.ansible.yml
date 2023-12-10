@@ -3,54 +3,53 @@
   become: true
   vars:
     - stack_location: /opt/stack-config
+    - domain_name: cbxon.co.uk
+    - CF_API_EMAIL: charlie.boon@sky.com
+    - CF_API_KEY: c4d506eb987bf67c65d430aa4f70eb5de9fff
   tasks:
-    - name: Create directory for tv
+    - name: Create directories
       ansible.builtin.file:
-        path: /media/tv
+        path: "{{ item }}"
         state: directory
         mode: '0775'
         owner: ansible
         group: docker
+      loop:
+        - /media/tv
+        - /media/movies
+        - /media/downloads
+        - /media/music
+        - '{{ stack_location }}'
 
-    - name: Create directory for movies
-      ansible.builtin.file:
-        path: /media/movies
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
-
-    - name: Create directory for downloads
-      ansible.builtin.file:
-        path: /media/downloads
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
-  
-    - name: Create directory for music
-      ansible.builtin.file:
-        path: /media/music
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
-
-    - name: Create directory for Stack
-      ansible.builtin.file:
-        path: '{{ stack_location }}'
-        state: directory
-        mode: '0775'
-        owner: ansible
-        group: docker
-
-    - name: Copy Stack Config files
+    - name: Copy Stack Env files
       ansible.builtin.copy:
-        src: ../stack-config/
-        dest: '{{ stack_location }}'
-        mode: '0775'
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+        mode: "{{ item.mode }}"
         owner: ansible
         group: docker
+      loop:
+        - { dest: "{{ stack_location }}", src: '../stack-config/docker.env', mode: "0775" }
+
+    - name: Create Stack Secret files
+      ansible.builtin.copy:
+        dest: '{{ item.dest }}'
+        mode: "{{ item.mode }}"
+        content: "{{ item.content }}"
+        owner: ansible
+      loop:
+        - { dest: "{{ stack_location }}/cf_api_key.txt", mode: "0400", content: "{{ CF_API_KEY }}" }
+
+    - name: Creating Stack Config files
+      ansible.builtin.template:
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+        mode: "{{ item.mode }}"
+        owner: ansible
+        group: docker
+      loop:
+        - { src: '../stack-config/docker-compose.yml.j2', mode: "0775", dest: "{{ stack_location }}/docker-compose.yml"}
+        - { src: '../stack-config/traefik.yml.j2', mode: "0775", dest: "{{ stack_location }}/traefik/traefik.yml"}
 
     - name: Run Docker Compose
       ansible.builtin.shell:

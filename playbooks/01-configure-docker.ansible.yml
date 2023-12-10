@@ -1,17 +1,27 @@
 ---
 - hosts: all
   become: true
-  vars_files: secrets.yml
+  vars:
+    pwd: !vault |
+      $ANSIBLE_VAULT;1.1;AES256
+      31656661376562353439383962653235343033316163343637633531643465306362346565323461
+      3330323135663664366366373564346337336230663532300a396165663139303537363661653863
+      33376561323135376533306438336539353636346265623830326535353661643731366566363737
+      3630313736366437380a373335343433613162363139613337623162393164383930613939643732
+      61366530396533343633343261323633396339383532373364613533333965313365643163326238
+      63323137616139626337363061313131353334313366613139616366666432653762323162383063
+      30616539633735646437336331306136646231363961396134366232363535633835666633643030
+      33396464616637623134
   tasks:
     - name: Create Docker User Group
       ansible.builtin.group:
         name: docker
-        
+
     - name: Configure ansible user
       ansible.builtin.user:
         name: ansible
-        password: '{{ password }}'
-        group: docker
+        password: "{{ pwd }}"
+        groups: docker
         append: true
 
     - name: Install Required System Packages
@@ -20,7 +30,7 @@
           - ca-certificates
           - curl
           - gnupg
-        state: latest
+        state: present
         update_cache: true
 
     - name: Add Docker GPG apt key
@@ -29,7 +39,7 @@
         state: present
 
     - name: Add Docker Repository
-      apt_repository:
+      ansible.builtin.apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu jammy stable
         state: present
 
@@ -41,5 +51,5 @@
           - containerd.io
           - docker-buildx-plugin
           - docker-compose-plugin
-        state: latest
+        state: present
         update_cache: true

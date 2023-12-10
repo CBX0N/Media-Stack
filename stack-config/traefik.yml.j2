@@ -18,7 +18,7 @@ entryPoints:
 certificatesResolvers:
   letsencrypt:
     acme:
-      email: acme@cbxon.co.uk
+      email: {{ CF_API_EMAIL }}
       storage: acme.json
       dnschallenge:
         provider: cloudflare
