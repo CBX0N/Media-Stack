@@ -5,16 +5,19 @@ services:
     image: traefik
     container_name: traefik
     env_file: ./docker.env
+    environment:
+      CF_API_EMAIL: {{ CF_API_EMAIL }}
+      CF_API_KEY: /run/secrets/cf_api_key
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./traefik/traefik.yml:/traefik.yml:ro
-      - ./traefik/acme.json:/acme.json
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
+    secrets:
+      - cf_api_key
     restart: unless-stopped 
-
   radarr:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
@@ -25,7 +28,7 @@ services:
       - /media/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.radarr.rule=Host(`radarr.cbxon.co.uk`)"
+      - "traefik.http.routers.radarr.rule=Host(`Odyssey.{{ domain_name }}`)"
       - "traefik.http.services.radarr.loadbalancer.server.port=7878"
       - "traefik.http.routers.radarr.entrypoints=websecure"
     restart: unless-stopped 
@@ -40,7 +43,7 @@ services:
       - /media/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.sonarr.rule=Host(`sonarr.cbxon.co.uk`)"
+      - "traefik.http.routers.sonarr.rule=Host(`Rogue.{{ domain_name }}`)"
       - "traefik.http.services.sonarr.loadbalancer.server.port=8989"
       - "traefik.http.routers.sonarr.entrypoints=websecure"
     restart: unless-stopped
@@ -55,7 +58,7 @@ services:
       - /media/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.lidarr.rule=Host(`lidarr.cbxon.co.uk`)"
+      - "traefik.http.routers.lidarr.rule=Host(`Titan.{{ domain_name }}`)"
       - "traefik.http.services.lidarr.loadbalancer.server.port=8686"
       - "traefik.http.routers.lidarr.entrypoints=websecure"      
     restart: unless-stopped
@@ -69,7 +72,7 @@ services:
       - /media/downloads:/downloads
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.jackett.rule=Host(`jackett.cbxon.co.uk`)"
+      - "traefik.http.routers.jackett.rule=Host(`Paragon.{{ domain_name }}`)"
       - "traefik.http.services.jackett.loadbalancer.server.port=9117"
       - "traefik.http.routers.jackett.entrypoints=websecure"
     ports:
@@ -101,14 +104,18 @@ services:
       - 8080
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.cbxon.co.uk`)"
+      - "traefik.http.routers.qbittorrent.rule=Host(`Genesis.{{ domain_name }}`)"
       - "traefik.http.services.qbittorrent.loadbalancer.server.port=8080"
       - "traefik.http.routers.qbittorrent.entrypoints=websecure"
     restart: unless-stopped
 
-  firefox:
-    image: lscr.io/linuxserver/firefox:latest
-    container_name: firefox
-    env_file: ./docker.env
-    network_mode: bridge
-    restart: unless-stopped
+  # firefox:
+  #   image: lscr.io/linuxserver/firefox:latest
+  #   container_name: firefox
+  #   env_file: ./docker.env
+  #   network_mode: bridge
+  #   restart: unless-stopped
+
+secrets:
+  cf_api_key:
+    file: ./cf_api_key.txt

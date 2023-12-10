@@ -4,24 +4,19 @@
   tasks:
     - name: Install Required System Packages
       ansible.builtin.apt:
-        pkg:
-          - rclone
-        state: latest
+        pkg: rclone=1.53.3*
+        state: present
         update_cache: true
 
-    - name: Configure RClone Remote
+    - name: Copy Backup Configuration
       ansible.builtin.copy:
-        dest: /home/ansible/.config/rclone/rclone.conf
-        src: ../rclone/rclone.conf
-        mode: "0644"
+        dest: '{{ item.dest }}'
+        src: '{{ item.src }}'
+        mode: '{{ item.mode }}'
         force: true
-
-    - name: Copy backup shell script
-      ansible.builtin.copy:
-        dest: /usr/local/bin/backups.sh
-        src: ./backups.sh
-        mode: '0755'
-        force: true
+      loop:
+        - { dest: '/home/ansible/.config/rclone/rclone.conf', src: '../rclone/rclone.conf', mode: "0644" }
+        - { dest: '/usr/local/bin/backups.sh', src: './backups.sh', mode: "0755" }
 
     - name: Configure Backup Cron Job
       ansible.builtin.cron:
